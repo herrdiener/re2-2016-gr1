@@ -1,0 +1,270 @@
+\documentclass{beamer}
+\usepackage[british]{babel}
+%\usepackage[utf8x]{inputenx}
+%\usepackage[T1]{fontenc}
+
+\mode<presentation> {
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{mathtools}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Automated Traceability]{Automated Techniques\\for Finding and Maintaining Traces} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Group 1}
+\date{28th November 2016}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Preliminary Remarks}
+\begin{frame}
+\frametitle{The Need for Automatisation}
+Traditional requirements tracing is
+\begin{itemize}
+\item slow
+\item expensive
+\item prone to non-completeness (missing links)
+\end{itemize}
+
+\vfill$\Rightarrow$ Indicators for automation potential
+
+\end{frame}
+
+%------------------------------------------------
+
+\section{Methodology}
+\begin{frame}
+\frametitle{How to Find Links?}
+
+\begin{itemize}
+\item Relevancy likelihood estimation is a basic task in computational linguistics.
+\item Basically a search engine where everything's a query and everything's a document.
+\item One possible technique: term vectors.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Term Vectors}
+How relevant is a specific term to an artifact?
+
+\[\vec{r}_\text{doc}=
+\begin{pmatrix*}[l]
+  r_\text{turnstile}\\
+  r_\text{card}\\
+  r_\text{the}\\
+  \vdots\\
+  r_\text{operator}
+\end{pmatrix*}
+=
+\begin{pmatrix}
+  0.22\\
+  0.68\\
+  0.02\\
+  \vdots\\
+  0.00\\
+\end{pmatrix}
+\]
+
+\vfill
+How relevant are two artifacts to each other?
+
+\[ rel_{\vec r_1, \vec r_2} \cos(\vec r_1 \angle \vec r_2) \]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{What to do with this information?}
+\begin{itemize}
+\item We have an automatically generated relevancy likelihood extimation for each pair of trace artifacts.
+\item Two options:
+  \begin{enumerate}
+  \item Register all traces with a similarity $>\theta$ and be done with it.
+  \item Present higher-probability links to human analyst for validation.
+  \end{enumerate}
+\item Option 2. Definitely option 2.
+\item Therefore recall must be optimised over precision.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Learning}
+\begin{itemize}
+\item Automatic relevancy vectors are unreliable.
+\item Let's steal some stuff from computational linguists again!
+  \begin{itemize}
+  \item Weight matrices are useful!
+  \end{itemize}
+\end{itemize}
+
+\[\vec{r}_\text{doc}\times \vec w=
+\begin{pmatrix*}[l]
+  r_\text{turnstile}\\
+  r_\text{card}\\
+  r_\text{the}\\
+  \vdots\\
+  r_\text{operator}
+\end{pmatrix*}
+\times
+\begin{pmatrix*}[l]
+  w_\text{turnstile}\\
+  w_\text{card}\\
+  w_\text{the}\\
+  \vdots\\
+  w_\text{operator}
+\end{pmatrix*}
+=
+\begin{pmatrix}
+  0.22\\
+  0.68\\
+  0.02\\
+  \vdots\\
+  0.00\\
+\end{pmatrix}
+\times
+\begin{pmatrix}
+  0.75\\
+  2.00\\
+  0.25\\
+  \vdots\\
+  1.00\\
+\end{pmatrix}
+\]
+
+\begin{itemize}
+\item Weights can be uniformly initalised and later modified according to feedback from human analysts.
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\section{Studies}
+\begin{frame}
+\frametitle{Hayes et al. 2007}
+\begin{itemize}
+\item RETRO system
+  \begin{itemize}
+  \item Facilitates tracing for human analysts
+  \item Intended for vertical tracing (`high-level' to `low-level' artifacts)
+  \end{itemize}
+\end{itemize}
+
+\begin{table}
+\begin{tabular}{l||l|l|r|}
+  &Recall&Precision&Time [min]\\\hline\hline
+  Manual group&0.33&0.24&120.67\\\hline
+  RETRO group&0.70&0.13&41.88\\\hline
+  T test (p value)&0.001&0.01&0.0004\\\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Huang et al. 2007}
+\begin{itemize}
+\item Poirot System
+  \begin{itemize}
+  \item Smarter parsing
+  \item (Programming) stopword removal
+  \item Normalisation of {\tt conventionallyStyledNames();}
+  \end{itemize}
+\item Achieved 90\% recall and about 30\% precision
+\item Deduced nine `best practices'
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Huang's Best Practices}
+\begin{enumerate}
+\item Trace for a purpose
+\item Define a suitable trace granularity
+\item Support in-place traceability
+\item Use a well-defined project glossary
+\item Write quality requirements
+\item Construct a meaningful hierarchy
+\item Bridge the intradomain semantic gap
+\item Create rich content
+\item \textbf{Use a process improvement plan}
+\end{enumerate}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Discussion}
+\begin{frame}
+\Huge{\centerline{Discussion}}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document} 
