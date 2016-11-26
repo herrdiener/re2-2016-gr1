@@ -114,7 +114,9 @@ Traditional requirements tracing is
 \frametitle{Term Vectors}
 How relevant is a specific term to an artifact?
 
-\[\vec{r}_\text{doc}=
+\begin{block}{Term Relevancy Vector structure}
+\[
+\vec{r}_\text{doc}=
 \begin{pmatrix*}[l]
   r_\text{turnstile}\\
   r_\text{card}\\
@@ -131,11 +133,15 @@ How relevant is a specific term to an artifact?
   0.00\\
 \end{pmatrix}
 \]
+\end{block}
 
 \vfill
 How relevant are two artifacts to each other?
 
-\[ rel_{\vec r_1, \vec r_2} \cos(\vec r_1 \angle \vec r_2) \]
+\begin{block}{Cosine Similarity}
+  \[ rel_{\vec r_1, \vec r_2} = \cos(\vec r_1 \angle \vec r_2)
+  = \frac{\vec r_1 \cdot \vec r_2}{|\vec r_1| \cdot |\vec r_2| } \]
+\end{block}
 
 \end{frame}
 
@@ -163,7 +169,8 @@ How relevant are two artifacts to each other?
   \end{itemize}
 \end{itemize}
 
-\[\vec{r}_\text{doc}\times \vec w=
+\begin{block}{Adding a weight vector}
+\[\vec{r}_\text{doc}\cdot \vec w=
 \begin{pmatrix*}[l]
   r_\text{turnstile}\\
   r_\text{card}\\
@@ -171,7 +178,7 @@ How relevant are two artifacts to each other?
   \vdots\\
   r_\text{operator}
 \end{pmatrix*}
-\times
+\cdot
 \begin{pmatrix*}[l]
   w_\text{turnstile}\\
   w_\text{card}\\
@@ -187,7 +194,7 @@ How relevant are two artifacts to each other?
   \vdots\\
   0.00\\
 \end{pmatrix}
-\times
+\cdot
 \begin{pmatrix}
   0.75\\
   2.00\\
@@ -196,6 +203,7 @@ How relevant are two artifacts to each other?
   1.00\\
 \end{pmatrix}
 \]
+\end{block}
 
 \begin{itemize}
 \item Weights can be uniformly initalised and later modified according to feedback from human analysts.
