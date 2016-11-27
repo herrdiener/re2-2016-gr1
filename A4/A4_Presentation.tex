@@ -114,16 +114,7 @@ Traditional requirements tracing is
 \frametitle{Term Vectors}
 How relevant is a specific term to an artifact?
 
-\begin{columns}[t]
-\column{.45\textwidth}
-\begin{block}{TF-IDF}
-\(
-r_{i,j} = tf_{i,j}\cdot\log\frac{1}{df_j}
-\)
-\end{block}
-
-\pause
-
+\begin{columns}
 \column{.45\textwidth}
 \begin{block}{Term Vector structure}
 \(
@@ -146,10 +137,20 @@ r_{i,j} = tf_{i,j}\cdot\log\frac{1}{df_j}
 \)
 \end{block}
 
+\pause
+
+\column{.45\textwidth}
+\begin{block}{TF-IDF}
+\(
+r_{i,j} = tf_{i,j}\cdot\log\frac{1}{df_j}
+\)
+\end{block}
+
+\pause
+
 \end{columns}
 
 \vfill
-\pause
 How relevant are two artifacts to each other?
 
 \begin{block}{Cosine Similarity}
