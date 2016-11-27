@@ -114,15 +114,26 @@ Traditional requirements tracing is
 \frametitle{Term Vectors}
 How relevant is a specific term to an artifact?
 
-\begin{block}{Term Relevancy Vector structure}
-\[
-\vec{r}_\text{doc}=
+\begin{columns}[t]
+\column{.45\textwidth}
+\begin{block}{TF-IDF}
+\(
+r_{i,j} = tf_{i,j}\cdot\log\frac{1}{df_j}
+\)
+\end{block}
+
+\pause
+
+\column{.45\textwidth}
+\begin{block}{Term Vector structure}
+\(
+\vec{r}_i=
 \begin{pmatrix*}[l]
-  r_\text{turnstile}\\
-  r_\text{card}\\
-  r_\text{the}\\
+  r_{i,\text{turnstile}}\\
+  r_{i,\text{card}}\\
+  r_{i,\text{the}}\\
   \vdots\\
-  r_\text{operator}
+  r_{i,\text{operator}}
 \end{pmatrix*}
 =
 \begin{pmatrix}
@@ -132,10 +143,13 @@ How relevant is a specific term to an artifact?
   \vdots\\
   0.00\\
 \end{pmatrix}
-\]
+\)
 \end{block}
 
+\end{columns}
+
 \vfill
+\pause
 How relevant are two artifacts to each other?
 
 \begin{block}{Cosine Similarity}
@@ -225,11 +239,14 @@ How relevant are two artifacts to each other?
 \end{itemize}
 
 \begin{table}
-\begin{tabular}{l||l|l|r|}
-  &Recall&Precision&Time [min]\\\hline\hline
-  Manual group&0.33&0.24&120.67\\\hline
-  RETRO group&0.70&0.13&41.88\\\hline
-  T test (p value)&0.001&0.01&0.0004\\\hline
+  \begin{tabular}{l r r r}
+    \toprule
+    &Recall&Precision&Time [min]\\
+    \midrule
+  Manual group&0.33&0.24&120.67\\
+  RETRO group&0.70&0.13&41.88\\
+  T test (p value)&0.001&0.01&0.0004\\
+  \bottomrule
 \end{tabular}
 \end{table}
 
